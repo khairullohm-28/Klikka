@@ -1,0 +1,109 @@
+{
+  "entities": {
+    "Member": {
+      "title": "Member",
+      "description": "Customer member in loyalty program",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string", "description": "Unique custom ID, e.g. M-001" },
+        "name": { "type": "string", "maxLength": 100 },
+        "email": { "type": "string", "format": "email" },
+        "phone": { "type": "string", "maxLength": 20 },
+        "points": { "type": "number" },
+        "totalPointsEarned": { "type": "number" },
+        "tier": { "type": "string", "enum": ["Bronze", "Silver", "Gold"] },
+        "joinDate": { "type": "string" },
+        "barcode": { "type": "string" }
+      },
+      "required": ["id", "name", "email", "phone", "points", "totalPointsEarned", "tier", "joinDate", "barcode"]
+    },
+    "Reward": {
+      "title": "Reward",
+      "description": "Vouchers or physical rewards for redeeming points",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "title": { "type": "string", "maxLength": 150 },
+        "description": { "type": "string", "maxLength": 500 },
+        "pointsCost": { "type": "number" },
+        "stock": { "type": "number" },
+        "image": { "type": "string" },
+        "category": { "type": "string", "enum": ["Voucher", "Merchandise", "Food & Beverage", "Services"] },
+        "codePattern": { "type": "string" }
+      },
+      "required": ["id", "title", "description", "pointsCost", "stock", "image", "category", "codePattern"]
+    },
+    "Transaction": {
+      "title": "Transaction",
+      "description": "History of earn or redeem points",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "memberId": { "type": "string" },
+        "memberName": { "type": "string" },
+        "type": { "type": "string", "enum": ["earn", "redeem"] },
+        "description": { "type": "string", "maxLength": 200 },
+        "points": { "type": "number" },
+        "date": { "type": "string" },
+        "rewardId": { "type": "string" },
+        "rewardCode": { "type": "string" }
+      },
+      "required": ["id", "memberId", "memberName", "type", "description", "points", "date"]
+    },
+    "Advertisement": {
+      "title": "Advertisement",
+      "description": "Campaign ads managed by admin",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "title": { "type": "string", "maxLength": 150 },
+        "description": { "type": "string", "maxLength": 500 },
+        "imageUrl": { "type": "string" },
+        "targetUrl": { "type": "string" },
+        "status": { "type": "string", "enum": ["active", "inactive"] },
+        "location": { "type": "string", "enum": ["hero", "sidebar", "popup"] },
+        "impressions": { "type": "number" },
+        "clicks": { "type": "number" },
+        "startDate": { "type": "string" },
+        "endDate": { "type": "string" },
+        "advertiser": { "type": "string" }
+      },
+      "required": ["id", "title", "description", "imageUrl", "targetUrl", "status", "location", "impressions", "clicks", "startDate", "endDate", "advertiser"]
+    },
+    "AppConfig": {
+      "title": "AppConfig",
+      "description": "App branding and configuration",
+      "type": "object",
+      "properties": {
+        "headerText": { "type": "string" },
+        "logoText": { "type": "string" },
+        "guideStep1": { "type": "string" },
+        "guideStep2": { "type": "string" },
+        "guideStep3": { "type": "string" }
+      },
+      "required": ["headerText", "logoText", "guideStep1", "guideStep2", "guideStep3"]
+    }
+  },
+  "firestore": {
+    "/members/{memberId}": {
+      "schema": "Member",
+      "description": "Loyalty program members collection"
+    },
+    "/rewards/{rewardId}": {
+      "schema": "Reward",
+      "description": "Redeemable loyalty rewards list"
+    },
+    "/transactions/{transactionId}": {
+      "schema": "Transaction",
+      "description": "Points earn and redeem transaction ledger"
+    },
+    "/ads/{adId}": {
+      "schema": "Advertisement",
+      "description": "Marketing and sponsor banner ads"
+    },
+    "/config/{configId}": {
+      "schema": "AppConfig",
+      "description": "Branding and guide configurations"
+    }
+  }
+}

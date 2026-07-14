@@ -1,0 +1,6 @@
+{
+  "name": "Loyalty Hub",
+  "description": "Platform portal loyalty member interaktif dengan sistem poin, penukaran reward, periklanan dinamis, dan dashboard admin real-time.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
